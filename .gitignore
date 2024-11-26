@@ -1,0 +1,14 @@
+# Ignorar todos los archivos de texto
+
+
+# Ignorar archivos relacionados con claves de una API
+.env
+
+# Ignorar entorno virtual de Python
+.venv
+
+# Ignorar cache de Python
+__pycache__/
+
+# Ignorar carpeta borrar
+borrar/

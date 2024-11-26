@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Nuestros Productos</h2>
+<div class="productos">
+    {% for producto in productos %}
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/producto1.jpg') }}" alt="{{ producto.nombre }}">
+        <h3>{{ producto.nombre }}</h3>
+        <p>Precio: ${{ producto.precio }}</p>
+        <p>Volumen: {{ producto.volumen }}</p>
+        <div class="action-buttons">
+            <a href="{{ url_for('heladeria_bp.vender', id=producto.id) }}", class="btn_table">Vender</a>
+        
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

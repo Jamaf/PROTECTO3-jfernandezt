@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Gestion ingredientes</h2>
+<div class="productos">
+    <div class="card">
+        
+        <h3>Listado de ingredientes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Inventario</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingrediente in ingredientes %}
+                <tr>
+                    <td>{{ ingrediente.id }}</td>
+                    <td>{{ ingrediente.nombre }}</td>
+                    <td>{{ ingrediente.precio }}</td>
+                    <td>{{ ingrediente.inventario }}</td>
+                    <td>{{ ingrediente.id_tipo_ingrediente }}</td>
+                    <td class="action-buttons">
+                        <a href="{{ url_for('heladeria_bp.abastecer_ingrediente', id=ingrediente.id) }}", class="btn_table">Abastecer</a>
+                        {% if ingrediente.id_tipo_ingrediente == 2 %} 
+                            <a href="{{ url_for('heladeria_bp.renovar_ingrediente', id=ingrediente.id) }}", class="btn_table">Renovar</a>
+                        {% endif %}
+                    </td>                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>       
+
+    </div>
+</div>
+<a href="{{ url_for('heladeria_bp.index')}}" class="btn">Regresar</a>
+{% endblock %}

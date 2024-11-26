@@ -1,0 +1,13 @@
+<!-- templates/gestion.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Gestión</h2>
+<ul class="gestion-list">
+
+    <li><a href="{{ url_for('heladeria_bp.informe_ventas')}}">Informe de Ventas Realizadas</a></li>
+    <li><a href="{{ url_for('heladeria_bp.listado_ingredientes')}}">Ver Inventario de Ingredientes</a></li>
+    <li><a href="{{ url_for('heladeria_bp.listado_ingredientes')}}">Abastecer Ingredientes</a></li>
+    <li><a href="{{ url_for('heladeria_bp.listado_ingredientes')}}">Renovar Inventario de Ingredientes</a></li>
+    <li><a href="{{ url_for('heladeria_bp.producto_mas_rentable')}}">Validar Producto Más Rentable</a></li>    
+</ul>
+{% endblock %}

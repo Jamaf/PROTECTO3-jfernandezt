@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Su venta </h2>
+<div class="productos">
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/producto1.jpg') }}" alt="{{ producto.nombre }}">
+        <h3>{{ producto.nombre }}</h3>
+        <p>Precio: ${{ producto.precio }}</p>
+        <p>Volumen: {{ producto.volumen }}</p>
+        <p>Resultado: {{ resultado }}</p>
+    </div>
+</div>
+<a href="{{ url_for('heladeria_bp.index')}}" class="btn">Regresar</a>
+{% endblock %}

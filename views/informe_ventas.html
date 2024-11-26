@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Informe ventas realizados </h2>
+<div class="productos">
+    <div class="card">
+        
+        <h3>Listado de productos vendidos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.cantidad_productos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>       
+        <br>
+        <h3>Resumen de ventas</h3>
+        <h4>Cantidad de productos vendidos {{ventas_dias}}</h4>
+        <h4>Valor de productos vendidos {{valor_ventas_dias}}</h4>
+
+    </div>
+</div>
+<a href="{{ url_for('heladeria_bp.index')}}" class="btn">Regresar</a>
+{% endblock %}

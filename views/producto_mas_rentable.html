@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Producto mas rentable</h2>
+<div class="productos">
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/producto1.jpg') }}" alt="{{ producto.nombre }}">
+        <h3>El producto mas rentable es {{ producto.nombre }}</h3>
+        <p>Precio: ${{ producto.precio }}</p>
+        <p>Volumen: {{ producto.volumen }}</p>
+    </div>
+</div>
+<a href="{{ url_for('heladeria_bp.index')}}" class="btn">Regresar</a>
+{% endblock %}
