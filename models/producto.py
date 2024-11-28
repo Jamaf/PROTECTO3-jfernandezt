@@ -1,4 +1,4 @@
-from database.db import db
+from database.db import db, ma
 from sqlalchemy import select, join, update
 from sqlalchemy.sql.functions import func
 
@@ -23,7 +23,15 @@ class Producto(db.Model):
     def consultar_por_id(id_producto):
         producto = db.get_or_404(Producto, id_producto)
         return producto
-
+    
+    def consultar_por_nombre(nombre):
+        #return db.session.execute(db.select(Perro).filter_by(Nombre=nombre)).scalars()
+        # return db.session.execute(\
+        #                           db.select(Producto)\
+        #                           .where(Producto.nombre==nombre)\
+        #                           ).scalars()
+        return db.session.scalars(db.select(Producto).where(Producto.nombre==nombre)).first()
+    
     #Primera versión de verificar existencias
     def verificar_existencias(id_producto):
         #Consulta para validar la existencia del tipo de ingrediente Base (id_tipo_ingrediente es 1)
@@ -151,3 +159,7 @@ class Producto(db.Model):
         db.session.commit()
         return 
     
+class ProductoSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Producto
+        include_fk = True

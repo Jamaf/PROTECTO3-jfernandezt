@@ -2,6 +2,8 @@ from models.heladeria import Heladeria
 from models.producto import Producto
 from models.ingrediente import Ingrediente
 
+from controllers.util import construir_rpta_json
+
 from flask import Blueprint
 from flask import render_template
 
@@ -15,6 +17,20 @@ def index():
 @heladeria_blueprint.route('/gestion')
 def gestion_home():
     return render_template('gestion.html')    
+
+@heladeria_blueprint.route('/vender_por_id/<int:id>/')
+def vender_por_id(id:int):
+    '''Punto 5.7 Vender un producto según su ID'''
+    try:
+        mensaje = Heladeria.vender_producto(id)
+        return construir_rpta_json( data = {"resultado_venta" : mensaje} )        
+    except ValueError as err:
+        mensaje = str(err)
+        return construir_rpta_json( data = {"resultado_venta" : mensaje} )
+    except Exception as err:
+        mensaje = mensaje = f'El id de producto {id} no fue encontrado'
+        return construir_rpta_json( data = None, error_message = mensaje, cod_error = 404 )
+
 
 @heladeria_blueprint.route('/vender/<int:id>/')
 def vender(id:int):

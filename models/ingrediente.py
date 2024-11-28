@@ -1,4 +1,4 @@
-from database.db import db
+from database.db import db, ma
 
 class Ingrediente(db.Model):
     __tablename__ = 'Ingredientes'
@@ -59,3 +59,11 @@ class Ingrediente(db.Model):
     def consultar_por_id(id_ingrediente):
         ingrediente = db.get_or_404(Ingrediente, id_ingrediente)
         return ingrediente    
+    
+    def consultar_por_nombre(nombre):
+        return db.session.scalars(db.select(Ingrediente).where(Ingrediente.nombre==nombre)).first()
+        
+class IngredienteSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Ingrediente
+        include_fk = True
