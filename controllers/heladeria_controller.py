@@ -34,6 +34,7 @@ def vender_por_id(id:int):
 
 @heladeria_blueprint.route('/vender/<int:id>/')
 def vender(id:int):
+    '''Este método vender se diseño junto a la interfaz web para la entrega del proyecto 2'''
     resultado:str
 
     try:

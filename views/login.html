@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Login</h2>
+    <div class="container">
+        <div class="card">
+            <h3>Login</h3>
+
+            <form action="{{ url_for('login_bp.login') }}" method="post">
+                <table>
+                    <tr>
+                        <td>
+                            <input name="username" type="text" placeholder="username" required>
+                        </td>
+                    </tr>                         
+                    <tr>
+                        <td>
+                            <input name="password" type="password" placeholder="password" required>
+                        </td>
+                    </tr>
+                                           
+                    <tr>
+                        <td>
+                            <button type="submit">Enviar</button>
+                        </td>
+                    </tr>                        
+                </table>
+            </form>        
+
+        </div>
+    </div>    
+{% endblock %}
