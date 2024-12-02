@@ -1,5 +1,7 @@
-from database.db import db, ma
-from sqlalchemy import select, join, update
+from database.db import db
+from database.db import ma
+from sqlalchemy import select
+from sqlalchemy import join
 from sqlalchemy.sql.functions import func
 
 from models.ingrediente import Ingrediente
@@ -18,22 +20,29 @@ class Producto(db.Model):
     id_tipo_producto = db.Column(db.SmallInteger, db.ForeignKey('Tipos_Productos.id'), nullable=False)
 
     def traer_todos():
+        '''Consulta todos los productos'''
         return db.session.scalars(db.select(Producto).order_by(Producto.id)).all()
         
     def consultar_por_id(id_producto):
+        '''Busca un producto por su id'''
         producto = db.get_or_404(Producto, id_producto)
         return producto
     
     def consultar_por_nombre(nombre):
-        #return db.session.execute(db.select(Perro).filter_by(Nombre=nombre)).scalars()
-        # return db.session.execute(\
-        #                           db.select(Producto)\
-        #                           .where(Producto.nombre==nombre)\
-        #                           ).scalars()
+        '''Busca un producto por su nombre'''
         return db.session.scalars(db.select(Producto).where(Producto.nombre==nombre)).first()
     
     #Primera versión de verificar existencias
     def verificar_existencias(id_producto):
+        '''
+        Valida que se tenga la cantidad suficiente de cada ingrediente para hacer un producto
+
+        Parameters:
+            id_producto: Id del produto a validar
+
+        Returns:
+            boolean: True si hay ingredientes suficiente, False de lo contrario
+        '''  
         #Consulta para validar la existencia del tipo de ingrediente Base (id_tipo_ingrediente es 1)
         stmt = (
                     select(func.count(ProductoIngrediente.id_producto))
@@ -56,8 +65,6 @@ class Producto(db.Model):
                 )
         cant_complementos_insuficientes = db.session.execute(stmt).scalar()  
         
-
-        # Ejecutar la consulta
         return True if cant_bases_insuficientes == 0 and cant_complementos_insuficientes == 0 else False   
     
 
@@ -135,7 +142,7 @@ class Producto(db.Model):
         return costo_ingredientes
 
     def eliminar_por_id(id_producto):
-
+        '''Elimina un producto, esta funcionalidad se usa en las pruebas automáticas '''
         stmt = (
             db.delete(ProductoIngrediente)
                 .where(ProductoIngrediente.id_producto == id_producto)

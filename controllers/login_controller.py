@@ -20,8 +20,6 @@ def load_user(user_id):
 
     return usuario
 
-
-
 @login_blueprint.route('/', methods=["GET", "POST"])
 def login():
     if request.method == 'GET':
@@ -48,8 +46,14 @@ def login():
 #@login_required
 def dashboard():
     return render_template("dashboard.html", usuario = current_user)       
+    #return render_template("no_autorizado.html", usuario = current_user)       
 
     # if current_user.rol.nombre != 'Administrador':
     #     return render_template("dashboard.html", usuario = current_user)       
     # else:
     #     return redirect(url_for('login_bp.login'))
+
+@login_blueprint.route('/no_autorizado')
+#@login_required
+def no_autorizado():
+    return render_template("no_autorizado.html", usuario = current_user)       

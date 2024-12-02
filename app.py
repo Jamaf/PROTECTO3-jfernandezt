@@ -1,10 +1,10 @@
 from flask import Flask
-from flask import render_template
 from dotenv import load_dotenv
 import os
 
-
-from database.db import db, ma, login_manager
+from database.db import db
+from database.db import ma
+from database.db import login_manager
 from database.db import init_db
 
 from controllers.ingrediente_controller import ingrediente_blueprint
@@ -29,7 +29,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False #Por buena practica
 SECRET_KEY = os.urandom(24)
 app.config["SECRET_KEY"] = SECRET_KEY
 
-#Aqui configuro la app para el objeto db
+#Configuro BD, marshmallow y login manager
 db.init_app(app)
 init_db(app)
 ma.init_app(app)

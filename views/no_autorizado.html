@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Acceso no autorizado</h2>
+    <div class="container">
+        <div class="card">
+            <h3>No se puede acceder a este sitio Web</h3>
+            <img src="{{ url_for('static', filename='images/advertencia.jpg') }}" alt="No autorizado">            
+            <p>Hola {{usuario.username}}</p> 
+            <p>Su rol {{usuario.rol.nombre if usuario}} no esta autorizado para la funcionalidad que intentas acceder</p>
+            <p>Intenta nuevamente con el rol adecuado</p>
+            <a href="{{ url_for('login_bp.login') }}" class="btn">Regresar</a>
+        </div>
+    </div>
+{% endblock %}

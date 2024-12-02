@@ -1,4 +1,6 @@
-from database.db import db, ma
+from database.db import db
+from database.db import ma
+from models.tipo_ingrediente import TipoIngrediente
 
 class Ingrediente(db.Model):
     __tablename__ = 'Ingredientes'
@@ -12,11 +14,13 @@ class Ingrediente(db.Model):
     id_tipo_ingrediente = db.Column(db.SmallInteger, db.ForeignKey('Tipos_Ingredientes.id'), nullable=False)
 
     def traer_ingredientes():
+        '''Consulta todos los ingredientes'''        
         return db.session.scalars(db.select(Ingrediente).order_by(Ingrediente.id)).all()    
     
     def abastecer_ingrediente(id_ingrediente):
+        '''Para las ingredientes tipo Bases la función abastecer sumará 5 en el inventario, mientras que para los Complementos se aumentará en 10'''
         ingrediente = db.get_or_404(Ingrediente, id_ingrediente)
-
+        
         #Si el ingrediente es Base
         if ingrediente.id_tipo_ingrediente == 1:
             ingrediente.inventario += 5
@@ -30,7 +34,7 @@ class Ingrediente(db.Model):
         return 
 
     def renovar_inventario(id_ingrediente):
-
+        '''Renueva el inventario de un ingrediente de tipo Complemento'''
         ingrediente = Ingrediente.consultar_por_id(id_ingrediente)
 
         if ingrediente.id_tipo_ingrediente == 1:
@@ -46,21 +50,25 @@ class Ingrediente(db.Model):
         
 
     def es_sano(id_ingrediente):    
+        '''Un ingrediente es sano si tiene estricatamente menos de 100 calorias o si es vegetariano'''
         ingrediente = db.get_or_404(Ingrediente, id_ingrediente)
 
         return True if ingrediente.calorias < 100 or ingrediente.es_vegetariano == True else False
 
     def eliminar_por_id(id_ingrediente):
+        '''Elimina un ingrediente a través de su id'''
         ingrediente = db.get_or_404(Ingrediente, id_ingrediente)
         db.session.delete(ingrediente)
         db.session.commit()
         return 
     
     def consultar_por_id(id_ingrediente):
+        '''Consulta un ingrediente a través de su id'''
         ingrediente = db.get_or_404(Ingrediente, id_ingrediente)
         return ingrediente    
     
     def consultar_por_nombre(nombre):
+        '''Consulta un ingrediente a través de su nombre'''
         return db.session.scalars(db.select(Ingrediente).where(Ingrediente.nombre==nombre)).first()
         
 class IngredienteSchema(ma.SQLAlchemyAutoSchema):
