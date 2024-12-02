@@ -6,6 +6,9 @@
             <h3>Dashboard</h3>
             <p>Bienvenido <b>{{usuario.username}}</p> </p>
             <p>Esta logueado con el rol <b>{{usuario.rol.nombre}}</p> </p>
+            <p>Funciones:</p>   
+            <a href="{{ url_for('heladeria_bp.index')}}">Ver productos</a>
+            <a href="{{ url_for('heladeria_bp.gestion_home')}}">Gestión</a>          
             <a href="{{ url_for('login_bp.login') }}" class="btn">Regresar</a>
         </div>
     </div>

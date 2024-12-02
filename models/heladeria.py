@@ -16,9 +16,11 @@ class Heladeria(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
 
     def traer_todos():
+        '''Consulta las heladerias'''        
         return db.session.scalars(db.select(Heladeria).order_by(Heladeria.id)).all()
     
     def traer_productos_habilitados():
+        '''Consulta todos los productos habilitados para la Heladeria'''
         stmt = (
             select(Producto.id, Producto.nombre, Producto.precio, Producto.volumen)
             .select_from(join(Producto, HeladeriaProducto, Producto.id == HeladeriaProducto.id_producto)
@@ -27,6 +29,7 @@ class Heladeria(db.Model):
         return db.session.execute(stmt).all()
 
     def traer_productos_vendidos():
+        '''Consulta todos los productos vendidos'''
         stmt = (
             select(Producto.id, Producto.nombre, Producto.precio, Venta.cantidad_productos)
             .select_from(join(Producto, Venta, Producto.id == Venta.id_producto)
@@ -35,6 +38,7 @@ class Heladeria(db.Model):
         return db.session.execute(stmt).all()
     
     def totales_ventas():
+        '''Resumen de las ventas realizadas por días y por valor'''
         stmt =  (select(func.count(Venta.id).label('ventas_dias'), func.sum(Producto.precio).label('valor_ventas_dias'))
                     .select_from(join(Producto, Venta, Producto.id == Venta.id_producto))
         )
@@ -44,6 +48,7 @@ class Heladeria(db.Model):
 
 
     def calcular_producto_mas_rentable():
+        '''Calcula el producto mas rentble'''
         productos_habilitados = Heladeria.traer_productos_habilitados()
 
         producto_mas_rentable = None
@@ -60,6 +65,9 @@ class Heladeria(db.Model):
             
 
     def vender_producto(id_producto):
+        '''Funcionalidad que permite vender un producto
+           Esta funcionalidad es usada por la heladeria WEB y la API 
+        '''
 
         #Consulta para obtener el primer ingrediente Base (id_tipo_ingrediente es 1) con insuficiencia de inventario
         stmt = (
@@ -89,6 +97,7 @@ class Heladeria(db.Model):
         if cant_complementos_insuficientes is not None:
             raise ValueError(f'Oh no! Nos hemos quedado sin {cant_complementos_insuficientes[0]}')        
 
+        #si llega hasta aca indica que hay los ingredientes necesarios para vender el producto
         #actualizamos las bases descontando del inventario
         stmt = (
                     update(Ingrediente)

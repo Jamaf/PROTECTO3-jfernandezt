@@ -33,27 +33,12 @@ def login():
         login_user(usuario[0])
         return redirect(url_for('login_bp.dashboard'))
 
-        # if usuario is not None:
-        #     login_user(usuario[0])
-        #     if usuario[0].rol.Nombre == 'Administrador':
-        #         return redirect(url_for('heladeria_bp.index'))
-        #     else:
-        #         return redirect(url_for('dashboard'))
-        # else:
-        #     return redirect(url_for('login'))
-
 @login_blueprint.route('/dashboard')
-#@login_required
+@login_required
 def dashboard():
     return render_template("dashboard.html", usuario = current_user)       
-    #return render_template("no_autorizado.html", usuario = current_user)       
-
-    # if current_user.rol.nombre != 'Administrador':
-    #     return render_template("dashboard.html", usuario = current_user)       
-    # else:
-    #     return redirect(url_for('login_bp.login'))
-
+    
 @login_blueprint.route('/no_autorizado')
-#@login_required
+@login_required
 def no_autorizado():
     return render_template("no_autorizado.html", usuario = current_user)       
