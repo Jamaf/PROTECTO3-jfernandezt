@@ -15,3 +15,36 @@ def init_db(app):
 ma = Marshmallow()        
 
 login_manager = LoginManager()
+
+def load_models():
+    from models.cliente import Cliente
+    from models.usuario import Usuario
+    from models.rol import Rol
+    from models.modulo import Modulo
+    from models.rol_modulo import RolModulo
+
+    from models.tipo_ingrediente import TipoIngrediente
+    from models.tipo_producto import TipoProducto
+    from models.ingrediente import Ingrediente
+    from models.producto import Producto
+    from models.producto_ingrediente import ProductoIngrediente
+
+    from models.heladeria_producto import HeladeriaProducto
+    from models.heladeria import Heladeria
+    from models.venta import Venta
+
+    return [
+        Cliente,
+        Usuario,
+        Rol,
+        Modulo,
+        RolModulo,
+        TipoIngrediente,
+        TipoProducto,
+        Ingrediente,
+        Producto,
+        ProductoIngrediente,
+        HeladeriaProducto,
+        Heladeria,
+        Venta
+    ]
