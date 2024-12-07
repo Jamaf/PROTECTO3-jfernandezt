@@ -8,6 +8,7 @@ from flask_login import login_required
 from flask_login import current_user
 
 from controllers.util import construir_rpta_json
+from urllib.parse import unquote
 
 ingrediente_blueprint = Blueprint('ingrediente_bp', __name__, url_prefix="/ingredientes")
 
@@ -35,7 +36,7 @@ def consultar_por_id_o_nombre( buscar_ingrediente:str ):
             if buscar_ingrediente.isnumeric():
                 ingrediente = IngredienteSchema().dump(Ingrediente.consultar_por_id(int(buscar_ingrediente)))
             else:
-                ingrediente_bd =Ingrediente.consultar_por_nombre(buscar_ingrediente)
+                ingrediente_bd =Ingrediente.consultar_por_nombre(unquote(buscar_ingrediente))
                 if ingrediente_bd is None:
                     raise ValueError
                 ingrediente = IngredienteSchema().dump(ingrediente_bd)

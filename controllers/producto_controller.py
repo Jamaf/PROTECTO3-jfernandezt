@@ -8,6 +8,7 @@ from flask_login import login_required
 from flask_login import current_user
 
 from controllers.util import construir_rpta_json
+from urllib.parse import unquote
 
 producto_blueprint = Blueprint('producto_bp', __name__, url_prefix="/productos")
 
@@ -62,7 +63,7 @@ def consultar_por_id_o_nombre( buscar_producto:str ):
             if buscar_producto.isnumeric():
                 producto = ProductoSchema().dump(Producto.consultar_por_id(int(buscar_producto)))
             else:
-                producto_bd = Producto.consultar_por_nombre(buscar_producto)
+                producto_bd = Producto.consultar_por_nombre(unquote(buscar_producto))
                 if producto_bd is None:
                     raise ValueError
                 producto = ProductoSchema().dump(producto_bd)
