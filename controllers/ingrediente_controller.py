@@ -36,6 +36,7 @@ def consultar_por_id_o_nombre( buscar_ingrediente:str ):
             if buscar_ingrediente.isnumeric():
                 ingrediente = IngredienteSchema().dump(Ingrediente.consultar_por_id(int(buscar_ingrediente)))
             else:
+                buscar_ingrediente = buscar_ingrediente.replace('%2520', '%20')
                 ingrediente_bd =Ingrediente.consultar_por_nombre(unquote(buscar_ingrediente))
                 if ingrediente_bd is None:
                     raise ValueError

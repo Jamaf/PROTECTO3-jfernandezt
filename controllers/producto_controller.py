@@ -63,6 +63,8 @@ def consultar_por_id_o_nombre( buscar_producto:str ):
             if buscar_producto.isnumeric():
                 producto = ProductoSchema().dump(Producto.consultar_por_id(int(buscar_producto)))
             else:
+                #se greaga esta línea por que vercel esta metiendo como una doble codificación
+                buscar_producto = buscar_producto.replace('%2520', '%20')
                 producto_bd = Producto.consultar_por_nombre(unquote(buscar_producto))
                 if producto_bd is None:
                     raise ValueError
